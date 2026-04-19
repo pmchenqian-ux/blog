@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陈乾 - AI 产品专家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #9d4edd;
+            --dark: #0a0e27;
+            --light: #f0f4ff;
+            --accent: #ff006e;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00d4ff, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #9d4edd);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* 英雄部分 */
+        .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.2), transparent);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00d4ff, #9d4edd, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #00d4ff;
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease 0.4s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            animation: slideUp 0.8s ease 0.6s backwards;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #9d4edd);
+            color: #0a0e27;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00d4ff;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* 动画 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 优势部分 */
+        .advantages {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(10, 14, 39, 0.5), rgba(26, 31, 58, 0.8));
+            position: relative;
+        }
+
+        .advantages h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00d4ff, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .advantage-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(157, 78, 221, 0.05));
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantage-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1), transparent);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .advantage-card:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .advantage-card:hover::before {
+            opacity: 1;
+        }
+
+        .advantage-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advantage-card p {
+            color: #b0b0b0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 项目部分 */
+        .projects {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(26, 31, 58, 0.8), rgba(10, 14, 39, 0.5));
+        }
+
+        .projects h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #9d4edd, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(255, 0, 110, 0.05));
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: rgba(255, 0, 110, 0.5);
+            box-shadow: 0 20px 50px rgba(157, 78, 221, 0.3);
+            transform: translateY(-15px);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.3), rgba(0, 212, 255, 0.1));
+            padding: 2rem;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 110, 0.1), transparent);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .project-header h3 {
+            color: #00d4ff;
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+            background: rgba(10, 14, 39, 0.3);
+        }
+
+        .project-desc {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .project-btn {
+            background: linear-gradient(135deg, #00d4ff, #9d4edd);
+            color: #0a0e27;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .project-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* 履历部分 */
+        .experience {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(10, 14, 39, 0.5), rgba(26, 31, 58, 0.8));
+        }
+
+        .experience h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00d4ff, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, #00d4ff, #9d4edd, transparent);
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: auto;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            width: 45%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #00d4ff;
+            border: 3px solid #0a0e27;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(157, 78, 221, 0.1));
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .timeline-content h3 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+        }
+
+        /* 联系部分 */
+        .contact {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(26, 31, 58, 0.8), rgba(10, 14, 39, 0.5));
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #9d4edd, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-item span {
+            color: #b0b0b0;
+        }
+
+        .contact-link {
+            color: #00d4ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #ff006e;
+        }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1f3a, #16213e);
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            width: 90%;
+            max-width: 700px;
+            border-radius: 15px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        .close {
+            color: #00d4ff;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff006e;
+        }
+
+        .modal-content h2 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content p {
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .modal-content ul {
+            color: #b0b0b0;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* 脉冲动画 */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 50px;
+                margin-right: 0;
+            }
+
+            .timeline-item::before {
+                left: 20px;
+            }
+
+            .contact-info {
+                gap: 1rem;
+            }
+        }
+
+        /* 滚动效果 */
+        .fade-in {
+            opacity: 0;
+            animation: fadeInAnimation 1s ease forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">CQ</div>
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#advantages">优势</a></li>
+            <li><a href="#projects">项目</a></li>
+            <li><a href="#experience">履历</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </nav>
+
+    <!-- 英雄部分 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>陈乾</h1>
+            <p>AI 产品专家</p>
+            <div class="hero-subtitle">打造 AI 全链路解决方案，驱动商业价值实现</div>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">查看项目</a>
+                <a href="#contact" class="btn btn-secondary">联系我</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 优势部分 -->
+    <section class="advantages" id="advantages">
+        <h2>核心优势</h2>
+        <div class="advantages-grid">
+            <div class="advantage-card">
+                <h3>🚀 AI 全链路落地能力</h3>
+                <p>从战略规划到技术实现，从数据积累到商业变现，掌握 AI 产品从 0 到 1 的完整方法论和最佳实践。</p>
+            </div>
+            <div class="advantage-card">
+                <h3>🔧 复杂业务 0 到 1 建设能力</h3>
+                <p>深度理解业务需求，善于在复杂约束下进行创新设计，成功构建多个百万级用户的 AI 产品体系。</p>
+            </div>
+            <div class="advantage-card">
+                <h3>💰 AI 商业化与结果导向能力</h3>
+                <p>紧跟商业目标，深度打磨产品体验，通过数据驱动决策，实现显著的商业化增长和 ROI 提升。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目部分 -->
+    <section class="projects" id="projects">
+        <h2>AI 产品案例</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>🤖 AI 客服营销项目</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-desc">智能客服系统融合 AI，实现自动化营销和客户关系管理的革新</p>
+                    <div class="project-tags">
+                        <span class="tag">NLP</span>
+                        <span class="tag">客服</span>
+                        <span class="tag">营销自动化</span>
+                    </div>
+                    <button class="project-btn" onclick="openModal('project1')">了解详情</button>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>💳 AI 钱包项目</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-desc">基于 AI 的智能财务管理平台，提供个性化的资产配置和风险控制</p>
+                    <div class="project-tags">
+                        <span class="tag">金融AI</span>
+                        <span class="tag">风控</span>
+                        <span class="tag">个性化推荐</span>
+                    </div>
+                    <button class="project-btn" onclick="openModal('project2')">了解详情</button>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>🏢 AI 商户入网审核项目</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-desc">智能化商户审核系统，通过 AI 快速评估风险，提升审核效率</p>
+                    <div class="project-tags">
+                        <span class="tag">风险识别</span>
+                        <span class="tag">审核自动化</span>
+                        <span class="tag">合规管理</span>
+                    </div>
+                    <button class="project-btn" onclick="openModal('project3')">了解详情</button>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>📋 AI 体检报告解读项目</h3>
+                </div>
+                <div class="project-body">
+                    <p class="project-desc">AI 驱动的健康数据分析平台，为用户提供个性化的健康洞察和建议</p>
+                    <div class="project-tags">
+                        <span class="tag">医疗AI</span>
+                        <span class="tag">数据分析</span>
+                        <span class="tag">用户体验</span>
+                    </div>
+                    <button class="project-btn" onclick="openModal('project4')">了解详情</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 履历部分 -->
+    <section class="experience" id="experience">
+        <h2>职业履历</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>拉卡拉支付</h3>
+                    <p><strong>高级 AI 产品经理</strong></p>
+                    <p>主导 AI 商户入网审核、智能风控等产品从 0 到 1 的建设，构建完整的 AI 中台能力，支撑千万级商户生态。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>商米科技</h3>
+                    <p><strong>高级数据产品经理</strong></p>
+                    <p>设计并推进数据驱动的产品体系，通过大数据和 AI 算法优化商户经营决策，提升平台商业化能力。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>滴滴出行</h3>
+                    <p><strong>产品经理</strong></p>
+                    <p>参与核心业务创新，深入理解出行领域的复杂业务逻辑，积累大规模用户产品运营经验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系部分 -->
+    <section class="contact" id="contact">
+        <h2>联系我</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>📧</span>
+                <a href="mailto:pmchenqian@163.com" class="contact-link">pmchenqian@163.com</a>
+            </div>
+        </div>
+        <p style="color: #b0b0b0; margin-top: 2rem;">期待与您的合作，让 AI 驱动业务增长！</p>
+    </section>
+
+    <!-- 模态框 -->
+    <div id="project1Modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('project1')">&times;</span>
+            <h2>🤖 AI 客服营销项目</h2>
+            <p><strong>项目背景：</strong></p>
+            <p>传统客服系统存在效率低、成本高、用户体验差的问题。通过 AI 技术融合，打造智能客服新体验。</p>
+
+            <p><strong>核心功能：</strong></p>
+            <ul>
+                <li>自然语言处理（NLP）驱动的智能对话系统</li>
+                <li>基于用户行为的个性化营销推荐</li>
+                <li>7*24 小时自动化客服应答</li>
+                <li>智能工单路由和优先级分配</li>
+                <li>客户情感识别与风险预警</li>
+            </ul>
+
+            <p><strong>业务成果：</strong></p>
+            <ul>
+                <li>客服响应时间降低 80%</li>
+                <li>自动化解决率提升至 65%</li>
+                <li>营销转化率提高 40%</li>
+                <li>客户满意度提升 35%</li>
+            </ul>
+
+            <p><strong>我的贡献：</strong></p>
+            <p>主导产品战略规划、与 AI 技术团队协作完成算法评估、设计用户交互流程、推进从内部试点到全量上线的全过程。</p>
+        </div>
+    </div>
+
+    <div id="project2Modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('project2')">&times;</span>
+            <h2>💳 AI 钱包项目</h2>
+            <p><strong>项目背景：</strong></p>
+            <p>用户财务管理需求多样化，传统钱包无法提供智能化的资产配置建议。基于 AI 和大数据，打造智能财务助手。</p>
+
+            <p><strong>核心功能：</strong></p>
+            <ul>
+                <li>智能资产配置推荐引擎</li>
+                <li>风险评估和个性化投资组合</li>
+                <li>实时市场行情分析与预测</li>
+                <li>智能支出分析和省钱建议</li>
+                <li>多维度财务目标追踪</li>
+            </ul>
+
+            <p><strong>业务成果：</strong></p>
+            <ul>
+                <li>用户投资金额增长 120%</li>
+                <li>平均持仓时长提升 45%</li>
+                <li>用户留存率达到 68%</li>
+                <li>月均活跃用户突破 500 万</li>
+            </ul>
+
+            <p><strong>我的贡献：</strong></p>
+            <p>产品定位与商业模式设计、用户调研和需求分析、与金融和 AI 团队深度协作、推进整体产品落地和迭代。</p>
+        </div>
+    </div>
+
+    <div id="project3Modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('project3')">&times;</span>
+            <h2>🏢 AI 商户入网审核项目</h2>
+            <p><strong>项目背景：</strong></p>
+            <p>商户审核是支付平台的核心环节，手工审核效率低、成本高、风险难控。通过 AI 技术实现审核的自动化和智能化。</p>
+
+            <p><strong>核心功能：</strong></p>
+            <ul>
+                <li>基于多维度特征的风险识别模型</li>
+                <li>智能信息抽取和真伪性验证</li>
+                <li>实时反欺诈和黑名单识别</li>
+                <li>审核流程自动化编排</li>
+                <li>风险决策的可解释性分析</li>
+            </ul>
+
+            <p><strong>业务成果：</strong></p>
+            <ul>
+                <li>审核时间从 3 天缩短至 2 小时</li>
+                <li>自动化审核覆盖率达到 78%</li>
+                <li>欺诈识别率提升至 92%</li>
+                <li>运营成本降低 60%</li>
+            </ul>
+
+            <p><strong>我的贡献：</strong></p>
+            <p>风险模型设计与评估、审核流程再造、与风控和技术团队的深度协作、推进产品在全国范围的规模化部署。</p>
+        </div>
+    </div>
+
+    <div id="project4Modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('project4')">&times;</span>
+            <h2>📋 AI 体检报告解读项目</h2>
+            <p><strong>项目背景：</strong></p>
+            <p>大多数用户对体检报告理解不深，需要专业解读。通过 AI 医学知识库，为用户提供智能、可信的健康洞察。</p>
+
+            <p><strong>核心功能：</strong></p>
+            <ul>
+                <li>自动化体检报告解读和风险评级</li>
+                <li>医学知识图谱驱动的关联分析</li>
+                <li>个性化的健康改善建议</li>
+                <li>疾病早期预警和风险预测</li>
+                <li>与医生咨询的无缝对接</li>
+            </ul>
+
+            <p><strong>业务成果：</strong></p>
+            <ul>
+                <li>用户理解度提升 85%</li>
+                <li>后续就医转化率提高 52%</li>
+                <li>用户满意度达到 4.7/5.0</li>
+                <li>月均使用次数增长 300%</li>
+            </ul>
+
+            <p><strong>我的贡献：</strong></p>
+            <p>医学知识需求分析与采购、AI 解读准确性的评估与优化、用户体验设计、推进从小范围试点到大规模商用的过程。</p>
+        </div>
+    </div>
+
+    <script>
+        // 模态框函数
+        function openModal(projectId) {
+            const modalId = projectId + 'Modal';
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(projectId) {
+            const modalId = projectId + 'Modal';
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击背景关闭模态框
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.advantage-card, .project-card, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
